@@ -8,8 +8,8 @@ interface StorySetting {
 }
 
 const fetchStory = async (storyPath: string) => {
-	const storySetting: StorySetting = (await import(`/${storyPath}`)).default
-	const storyComponent = (await import(`/${storyPath.replace('.stories', '')}`))
+	const storySetting: StorySetting = (await import(storyPath)).default
+	const storyComponent = (await import(storyPath.replace('.stories', '')))
 		.default
 	return {
 		component: storyComponent,

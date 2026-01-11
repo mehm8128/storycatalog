@@ -33,7 +33,7 @@ app.get('/components', c => {
 
 		const components: Component[] = tsxFiles.map(file => ({
 			name: file,
-			path: `playground/${file}`
+			path: `${playgroundPath}/${file}`
 		}))
 
 		return c.json({
