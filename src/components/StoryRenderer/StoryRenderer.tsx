@@ -1,4 +1,5 @@
-import { Suspense, use } from 'react'
+import { Suspense, use, useState } from 'react'
+import { PropListItem } from '../PropListItem/PropListItem'
 
 interface StorySetting {
 	props: {
@@ -8,9 +9,13 @@ interface StorySetting {
 }
 
 const fetchStory = async (storyPath: string) => {
-	const storySetting: StorySetting = (await import(storyPath)).default
-	const storyComponent = (await import(storyPath.replace('.stories', '')))
-		.default
+	const storySetting: StorySetting = (
+		await import(/* @vite-ignore */ storyPath)
+	).default
+	const storyComponent = (
+		await import(/* @vite-ignore */ storyPath.replace('.stories', ''))
+	).default
+
 	return {
 		component: storyComponent,
 		props: storySetting.props
@@ -23,7 +28,8 @@ function StoryContent({
 	fetchStoryPromise: ReturnType<typeof fetchStory>
 }) {
 	const story = use(fetchStoryPromise)
-	const propsList = Object.entries(story.props).map(([key, value]) => ({
+	const [propControls, setPropControls] = useState(story.props)
+	const propsList = Object.entries(propControls).map(([key, value]) => ({
 		key,
 		value
 	}))
@@ -32,14 +38,19 @@ function StoryContent({
 		<div>
 			<section>
 				<h2>Component</h2>
-				{story.component ? story.component(story.props) : null}
+				{story.component ? story.component(propControls) : null}
 			</section>
 			<section>
 				<h2>Props</h2>
 				{propsList.map(({ key, value }) => (
-					<div key={key}>
-						{key}: {String(value)}
-					</div>
+					<PropListItem
+						key={key}
+						propKey={key}
+						propValue={value}
+						onChange={newValue =>
+							setPropControls(prev => ({ ...prev, [key]: newValue }))
+						}
+					/>
 				))}
 			</section>
 		</div>

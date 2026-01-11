@@ -50,7 +50,10 @@ export default function App() {
 				</ul>
 			</section>
 			{selectedComponentPath && (
-				<StoryRenderer storyPath={selectedComponentPath} />
+				<StoryRenderer
+					storyPath={selectedComponentPath}
+					key={selectedComponentPath}
+				/>
 			)}
 		</main>
 	)
