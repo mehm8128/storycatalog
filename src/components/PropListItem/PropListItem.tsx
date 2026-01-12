@@ -12,9 +12,9 @@ export function PropListItem<T>({ propKey, propValue, onChange }: Props<T>) {
 			{/* biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫 */}
 			<label className={styles.propLabel}>
 				<span className={styles.propKey}>{propKey}</span>
-				<div className={styles.propInputWrapper}>
+				<span className={styles.propInputWrapper}>
 					<PropListInputFactory propValue={propValue} onChange={onChange} />
-				</div>
+				</span>
 			</label>
 		</li>
 	)

@@ -10,7 +10,7 @@
 		"preview": "vite preview",
 		"typecheck": "cmk && tsc --noEmit",
 		"biome": "biome check --write src",
-		"lint:markup": "markuplint \"**/*.[jt]sx\""
+		"lint:markup": "markuplint \"**/*.tsx\""
 	},
 	"dependencies": {
 		"@hono/node-server": "^1.19.8",
