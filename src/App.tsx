@@ -5,17 +5,20 @@ import { SuspenseWithErrorBoundary } from './components/SuspenseWithErrorBoundar
 
 export default function App() {
 	return (
-		<main className={styles.module}>
-			<h1>Story Catalog</h1>
-			<section>
-				<h2>Components</h2>
+		<div className={styles.module}>
+			<aside className={styles.sidebar}>
+				<h1>Story Catalog</h1>
+				<section>
+					<SuspenseWithErrorBoundary>
+						<StoryList />
+					</SuspenseWithErrorBoundary>
+				</section>
+			</aside>
+			<main className={styles.main}>
 				<SuspenseWithErrorBoundary>
-					<StoryList />
+					<StoryRenderer />
 				</SuspenseWithErrorBoundary>
-			</section>
-			<SuspenseWithErrorBoundary>
-				<StoryRenderer />
-			</SuspenseWithErrorBoundary>
-		</main>
+			</main>
+		</div>
 	)
 }

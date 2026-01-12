@@ -1,0 +1,29 @@
+.propItem {
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.propItem:last-child {
+	border-bottom: none;
+}
+
+.propLabel {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+	gap: 0.75rem;
+}
+
+.propKey {
+	font-size: 0.875rem;
+	font-weight: 500;
+	min-width: 100px;
+	flex-shrink: 0;
+}
+
+.propInputWrapper {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	flex-shrink: 0;
+}

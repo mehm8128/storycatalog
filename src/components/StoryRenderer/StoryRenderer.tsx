@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai'
-import { Suspense, use, useState } from 'react'
+import { use, useState } from 'react'
 import { fetchComponent } from '../../repositories/import/fetchComponent'
 import { fetchStories } from '../../repositories/import/fetchStories'
 import {
@@ -7,6 +7,8 @@ import {
 	selectedStoryFilePathAtom
 } from '../../states/selectedStory'
 import { PropListItem } from '../PropListItem/PropListItem'
+import { SuspenseWithErrorBoundary } from '../SuspenseWithErrorBoundary/SuspenseWithErrorBoundary'
+import styles from './StoryRenderer.module.css'
 
 function StoryContentInner({
 	selectedStory,
@@ -28,23 +30,23 @@ function StoryContentInner({
 	}))
 
 	return (
-		<div>
-			<section>
-				<h2>Component</h2>
-				<div>{component ? component(propControls) : null}</div>
+		<div className={styles.module}>
+			<section className={styles.componentSection}>
+				{component ? component(propControls) : null}
 			</section>
-			<section>
-				<h2>Props</h2>
-				{propsList.map(({ key, value }) => (
-					<PropListItem
-						key={key}
-						propKey={key}
-						propValue={value}
-						onChange={newValue =>
-							setPropControls(prev => ({ ...prev, [key]: newValue }))
-						}
-					/>
-				))}
+			<section className={styles.controls}>
+				<ul className={styles.propsList}>
+					{propsList.map(({ key, value }) => (
+						<PropListItem
+							key={key}
+							propKey={key}
+							propValue={value}
+							onChange={newValue =>
+								setPropControls(prev => ({ ...prev, [key]: newValue }))
+							}
+						/>
+					))}
+				</ul>
 			</section>
 		</div>
 	)
@@ -61,13 +63,13 @@ export function StoryRenderer() {
 	const fetchComponentPromise = fetchComponent(selectedStoryFilePath)
 
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
+		<SuspenseWithErrorBoundary>
 			<StoryContentInner
 				key={selectedStory}
 				selectedStory={selectedStory}
 				fetchStoriesPromise={fetchStoriesPromise}
 				fetchComponentPromise={fetchComponentPromise}
 			/>
-		</Suspense>
+		</SuspenseWithErrorBoundary>
 	)
 }

@@ -1,3 +1,5 @@
+import styles from './PropListItem.module.css'
+
 interface Props<T> {
 	propKey: string
 	propValue: T
@@ -6,11 +8,14 @@ interface Props<T> {
 
 export function PropListItem<T>({ propKey, propValue, onChange }: Props<T>) {
 	return (
-		<li style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-			<div>{propKey}: </div>
-			<div>
-				<PropListInputFactory propValue={propValue} onChange={onChange} />
-			</div>
+		<li className={styles.propItem}>
+			{/* biome-ignore lint/a11y/noLabelWithoutControl: 大丈夫 */}
+			<label className={styles.propLabel}>
+				<span className={styles.propKey}>{propKey}</span>
+				<div className={styles.propInputWrapper}>
+					<PropListInputFactory propValue={propValue} onChange={onChange} />
+				</div>
+			</label>
 		</li>
 	)
 }

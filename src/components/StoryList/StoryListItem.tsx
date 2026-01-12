@@ -7,6 +7,7 @@ import {
 	selectedStoryFilePathAtom
 } from '../../states/selectedStory'
 import { SuspenseWithErrorBoundary } from '../SuspenseWithErrorBoundary/SuspenseWithErrorBoundary'
+import styles from './StoryListItem.module.css'
 
 export function StoryListItemInner({
 	component,
@@ -33,17 +34,23 @@ export function StoryListItemInner({
 	}
 
 	return (
-		<li>
-			<div>
-				<button type="button" onClick={handleSelectComponent}>
-					{component.name}
+		<li className={styles.componentItem}>
+			<div className={styles.componentWrapper}>
+				<button
+					type="button"
+					className={styles.componentButton}
+					onClick={handleSelectComponent}
+				>
+					<span className={styles.componentName}>{component.name}</span>
+					<span className={styles.toggleIcon}>{isOpen ? '▼' : '▶'}</span>
 				</button>
 				{isOpen && (
-					<ul>
+					<ul className={styles.storyList}>
 						{storyList.map(story => (
-							<li key={story.name}>
+							<li key={story.name} className={styles.storyItem}>
 								<button
 									type="button"
+									className={styles.storyButton}
 									onClick={() => handleSelectStory(story.name)}
 								>
 									{story.name}
