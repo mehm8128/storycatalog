@@ -1,34 +1,27 @@
+import { useAtomValue } from 'jotai'
 import { Suspense, use, useState } from 'react'
+import { fetchComponent } from '../../repositories/import/fetchComponent'
+import { fetchStories } from '../../repositories/import/fetchStories'
 import { PropListItem } from '../PropListItem/PropListItem'
+import {
+	selectedStoryAtom,
+	selectedStoryFilePathAtom
+} from '../states/selectedStory'
 
-interface StorySetting {
-	props: {
-		// biome-ignore lint/suspicious/noExplicitAny: しかたない
-		[key: string]: any
-	}
-}
-
-const fetchStory = async (storyPath: string) => {
-	const storySetting: StorySetting = (
-		await import(/* @vite-ignore */ storyPath)
-	).default
-	const storyComponent = (
-		await import(/* @vite-ignore */ storyPath.replace('.stories', ''))
-	).default
-
-	return {
-		component: storyComponent,
-		props: storySetting.props
-	}
-}
-
-function StoryContent({
-	fetchStoryPromise
+function StoryContentInner({
+	selectedStory,
+	fetchStoriesPromise,
+	fetchComponentPromise
 }: {
-	fetchStoryPromise: ReturnType<typeof fetchStory>
+	selectedStory: string | null
+	fetchStoriesPromise: ReturnType<typeof fetchStories>
+	fetchComponentPromise: ReturnType<typeof fetchComponent>
 }) {
-	const story = use(fetchStoryPromise)
-	const [propControls, setPropControls] = useState(story.props)
+	const storyProps = use(fetchStoriesPromise).props
+	const component = use(fetchComponentPromise)
+	const [propControls, setPropControls] = useState(
+		selectedStory ? storyProps[selectedStory] : {}
+	)
 	const propsList = Object.entries(propControls).map(([key, value]) => ({
 		key,
 		value
@@ -38,7 +31,7 @@ function StoryContent({
 		<div>
 			<section>
 				<h2>Component</h2>
-				{story.component ? story.component(propControls) : null}
+				<div>{component ? component(propControls) : null}</div>
 			</section>
 			<section>
 				<h2>Props</h2>
@@ -57,12 +50,24 @@ function StoryContent({
 	)
 }
 
-export function StoryRenderer({ storyPath }: { storyPath: string }) {
-	const fetchStoryPromise = fetchStory(storyPath)
+export function StoryRenderer() {
+	const selectedStory = useAtomValue(selectedStoryAtom)
+	const selectedStoryFilePath = useAtomValue(selectedStoryFilePathAtom)
+
+	if (!selectedStoryFilePath) {
+		return
+	}
+	const fetchStoriesPromise = fetchStories(selectedStoryFilePath)
+	const fetchComponentPromise = fetchComponent(selectedStoryFilePath)
 
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
-			<StoryContent fetchStoryPromise={fetchStoryPromise} />
+			<StoryContentInner
+				key={selectedStory}
+				selectedStory={selectedStory}
+				fetchStoriesPromise={fetchStoriesPromise}
+				fetchComponentPromise={fetchComponentPromise}
+			/>
 		</Suspense>
 	)
 }

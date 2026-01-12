@@ -16,6 +16,7 @@
 		"@hono/node-server": "^1.19.8",
 		"clsx": "^2.1.1",
 		"hono": "^4.11.3",
+		"jotai": "^2.16.1",
 		"kiso.css": "^1.2.3",
 		"react": "^19.2.3",
 		"react-dom": "^19.2.3"

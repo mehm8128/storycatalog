@@ -1,1 +1,7 @@
 @import "kiso.css";
+
+ul,
+ol {
+	padding-inline-start: revert;
+	list-style-type: revert;
+}

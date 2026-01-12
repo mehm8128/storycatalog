@@ -4,3 +4,13 @@ export default {
 		href: 'https://example.com'
 	}
 }
+
+export const Default = {
+	props: {}
+}
+
+export const Portfolio = {
+	props: {
+		href: 'https://portfolio.hm8128.me'
+	}
+}

@@ -7,3 +7,15 @@ export default {
 			console.log('changed: ', val.target.value)
 	}
 }
+
+export const Default = {
+	props: {
+		checked: false
+	}
+}
+
+export const Checked = {
+	props: {
+		checked: true
+	}
+}
