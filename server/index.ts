@@ -32,7 +32,7 @@ app.get('/components', c => {
 		const tsxFiles = files.filter(file => file.endsWith('.stories.tsx'))
 
 		const components: Component[] = tsxFiles.map(file => ({
-			name: file,
+			name: file.replace('.stories.tsx', ''),
 			path: `${playgroundPath}/${file}`
 		}))
 

@@ -8,7 +8,7 @@ export default function TextInput({ value, label, onChange }: Props) {
 	return (
 		<div>
 			<label>
-				<span> {label}</span>
+				<span>{label}: </span>
 				<input type="text" value={value} onChange={onChange} />
 			</label>
 		</div>
