@@ -2,11 +2,11 @@ import { useAtomValue } from 'jotai'
 import { Suspense, use, useState } from 'react'
 import { fetchComponent } from '../../repositories/import/fetchComponent'
 import { fetchStories } from '../../repositories/import/fetchStories'
-import { PropListItem } from '../PropListItem/PropListItem'
 import {
 	selectedStoryAtom,
 	selectedStoryFilePathAtom
-} from '../states/selectedStory'
+} from '../../states/selectedStory'
+import { PropListItem } from '../PropListItem/PropListItem'
 
 function StoryContentInner({
 	selectedStory,

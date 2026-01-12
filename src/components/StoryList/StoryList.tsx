@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai'
-import { componentInfoAtom } from '../states/componentInfo'
+import { componentInfoAtom } from '../../states/componentInfo'
 import { StoryListItem } from './StoryListItem'
 
 export function StoryList() {

@@ -1,11 +1,12 @@
 import { useSetAtom } from 'jotai'
-import { type ComponentProps, Suspense, use, useState } from 'react'
+import { type ComponentProps, use, useState } from 'react'
 import type { ComponentInfo } from '../../repositories/fetchComponentInfo'
 import { fetchStories } from '../../repositories/import/fetchStories'
 import {
 	selectedStoryAtom,
 	selectedStoryFilePathAtom
-} from '../states/selectedStory'
+} from '../../states/selectedStory'
+import { SuspenseWithErrorBoundary } from '../SuspenseWithErrorBoundary/SuspenseWithErrorBoundary'
 
 export function StoryListItemInner({
 	component,
@@ -60,11 +61,11 @@ export function StoryListItem(props: { component: ComponentInfo }) {
 	const fetchStoriesPromise = fetchStories(props.component.path)
 
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
+		<SuspenseWithErrorBoundary>
 			<StoryListItemInner
 				{...props}
 				fetchStoriesPromise={fetchStoriesPromise}
 			/>
-		</Suspense>
+		</SuspenseWithErrorBoundary>
 	)
 }

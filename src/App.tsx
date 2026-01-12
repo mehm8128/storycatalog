@@ -1,7 +1,7 @@
-import { Suspense } from 'react'
 import styles from './App.module.css'
 import { StoryList } from './components/StoryList/StoryList'
 import { StoryRenderer } from './components/StoryRenderer/StoryRenderer'
+import { SuspenseWithErrorBoundary } from './components/SuspenseWithErrorBoundary/SuspenseWithErrorBoundary'
 
 export default function App() {
 	return (
@@ -9,13 +9,13 @@ export default function App() {
 			<h1>Story Catalog</h1>
 			<section>
 				<h2>Components</h2>
-				<Suspense fallback={<div>Loading...</div>}>
+				<SuspenseWithErrorBoundary>
 					<StoryList />
-				</Suspense>
+				</SuspenseWithErrorBoundary>
 			</section>
-			<Suspense fallback={<div>Loading...</div>}>
+			<SuspenseWithErrorBoundary>
 				<StoryRenderer />
-			</Suspense>
+			</SuspenseWithErrorBoundary>
 		</main>
 	)
 }
