@@ -1,3 +1,4 @@
+import axe from 'axe-core'
 import { useAtomValue } from 'jotai'
 import { use, useState } from 'react'
 import { fetchComponent } from '../../repositories/import/fetchComponent'
@@ -29,11 +30,32 @@ function StoryContentInner({
 		value
 	}))
 
+	const handleAxe = async () => {
+		axe.run(
+			['#preview'],
+			{
+				runOnly: ['wcag2a', 'wcag2aa']
+			},
+			(err, results) => {
+				if (err) {
+					console.error(err)
+				}
+				console.log(results.passes)
+				console.log(results.violations)
+			}
+		)
+	}
+
 	return (
 		<div className={styles.module}>
-			<section className={styles.componentSection}>
+			<section className={styles.componentSection} id="preview">
 				{component ? component(propControls) : null}
 			</section>
+			<div>
+				<button type="button" onClick={handleAxe}>
+					axe
+				</button>
+			</div>
 			<section className={styles.controls}>
 				<ul className={styles.propsList}>
 					{propsList.map(({ key, value }) => (

@@ -14,6 +14,7 @@
 	},
 	"dependencies": {
 		"@hono/node-server": "^1.19.8",
+		"axe-core": "^4.11.1",
 		"clsx": "^2.1.1",
 		"hono": "^4.11.3",
 		"jotai": "^2.16.1",
